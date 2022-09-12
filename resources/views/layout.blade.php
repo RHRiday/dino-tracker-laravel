@@ -9,11 +9,13 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="{{ asset('css/fa.min.css') }}" rel="stylesheet">
     <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
-    </script>
+    <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/stars.css') }}">
 
     <!-- Styles -->
     <style>
@@ -399,7 +401,6 @@
                 color: rgba(203, 213, 224, var(--text-opacity))
             }
         }
-
     </style>
 
     <style>
@@ -407,6 +408,9 @@
             font-family: 'Nunito', sans-serif;
         }
 
+        .rapStarFront {
+            display: flex !important;
+        }
     </style>
 </head>
 
@@ -428,9 +432,9 @@
                                 Creatures
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="creaturesDrop">
-                                <li><a class="dropdown-item" href="/land">Land</a></li>
-                                <li><a class="dropdown-item" href="/Aquatic">Aquatic</a></li>
-                                <li><a class="dropdown-item" href="/cenozoic">Cenozoic</a></li>
+                                <li><a class="dropdown-item" href="/list?type=land">Land</a></li>
+                                <li><a class="dropdown-item" href="/list?type=Aquatic">Aquatic</a></li>
+                                <li><a class="dropdown-item" href="/list?type=cenozoic">Cenozoic</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -466,6 +470,32 @@
     </div>
 
     @yield('content')
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ asset('js/datatables.min.js') }}" defer></script>
+    <script src="{{ asset('js/datatables.bootstrap.min.js') }}" defer></script>
+    <script src="{{ asset('js/stars.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#list').DataTable({
+                "pageLength": 100,
+                "order": []
+            });
+            $('.hybrid').select2({
+                tags: true,
+                theme: 'bootstrap',
+                maximumSelectionLength: -1,
+                width: '100%'
+            });
+            $('#class').select2({
+                theme: 'bootstrap',
+                maximumSelectionLength: -1,
+                width: '100%'
+            });
+        });
+    </script>
+    @yield('script')
 </body>
 
 </html>

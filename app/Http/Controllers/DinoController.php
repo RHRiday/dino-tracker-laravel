@@ -2,55 +2,151 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Creature;
 use App\Models\Land;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DinoController extends Controller
 {
-    public function show()
+    public function index(Request $request)
     {
-        $data = Land::orderByRaw('rank asc, breed asc, class asc, name asc')->get();
-        return view('land.index', ['lands' => $data]);
+        $rank = ['Common', 'Rare', 'Super Rare', 'Legendary', 'Limited Edition', 'VIP'];
+        $breed = ['General', 'Hybrid', 'Super Hybrid'];
+        switch ($request->type) {
+            case 'land':
+                $class = ['Herbivores', 'Carnivores', 'Pterosaurs', 'Amphibians'];
+                break;
+            case 'aquatic':
+                $class = ['Caves', 'Reefs', 'Surfaces'];
+                break;
+
+            default:
+                $class = ['Caverns', 'Savannahs', 'Snows'];
+                break;
+        }
+        $data = Creature::all()->where('type', ucfirst($request->type))
+            ->sortBy(function ($item) use ($rank, $breed, $class) {
+                return [
+                    array_search($item['rank'], $rank),
+                    array_search($item['breed'], $breed),
+                    array_search($item['class'], $class),
+                    $item->ferocity
+                ];
+            });
+        return view('dino.index', ['lands' => $data]);
     }
 
+    public function show($key)
+    {
+        if (is_int($key)) {
+            $dino = Creature::findOrFail($key);
+        } else {
+            $dino = Creature::where('name', $key)->firstOrFail();
+        }
+
+        return view('dino.show', [
+            'dino' => $dino,
+        ]);
+    }
     public function create()
     {
-        $data = request()->all();
-
-        $table = new Land();
-
-        $table->name = $data['name'];
-        $table->class = $data['class'];
-        $table->rank = $data['rank'];
-        $table->breed = $data['breed'];
-        $table->hp = $data['hp'];
-        $table->attack = $data['attack'];
-        $table->dna_cost = $data['dna'];
-        $table->status = $data['status'];
-        $table->maxed = $data['max'];
-
-        $table->save();
-
-        return redirect('/land');
+        return view('dino.create', [
+            'species' => Creature::all()
+        ]);
     }
 
-    public function showClass($class)
+    public function store(Request $request)
     {
-        $data = Land::where('class', $class)->orderByRaw('rank asc, breed asc, name asc')->get();
+        Creature::create([
+            'type' => $request->type,
+            'name' => $request->name,
+            'class' => $request->class,
+            'rank' => $request->rank,
+            'breed' => $request->breed,
+            'sp_1' => $request->f1,
+            'sp_2' => $request->f2,
+            'hp' => $request->hp,
+            'attack' => $request->attack,
+            'status' => $request->status == 'on' ? 1 : 0,
+            'hybrid' => $request->hybrid,
+            'cost' => $request->dna,
+            'stars' => $this->findStars($request),
+            'card' => $request->card,
+        ]);
 
-        return view('land.class', ['name'=>substr($class,0,-1), 'classes'=>$data]);
+        return redirect('/list?type=' . strtolower($request->type));
     }
 
-    public function showRank($rank)
+    public function edit(Creature $creature)
     {
-        $data = Land::where('rank', $rank)->orderByRaw('breed asc, class asc, name asc')->get();
-
-        return view('land.rank', ['name'=>$rank, 'ranks'=>$data]);
+        return view('dino.edit', [
+            'species' => Creature::all(),
+            'types' => array_unique(Creature::pluck('type')->toArray()),
+            'classes' => array_unique(Creature::pluck('class')->toArray()),
+            'ranks' => array_unique(Creature::pluck('rank')->toArray()),
+            'breeds' => array_unique(Creature::pluck('breed')->toArray()),
+            'dino' => $creature,
+        ]);
     }
-    public function showBreed($breed)
-    {
-        $data = Land::where('breed', $breed)->orderByRaw('rank asc, class asc, name asc')->get();
 
-        return view('land.breed', ['name'=>$breed, 'breeds'=>$data]);
+    public function update(Creature $creature, Request $request)
+    {
+        $creature->update([
+            'type' => $request->type,
+            'name' => $request->name,
+            'class' => $request->class,
+            'rank' => $request->rank,
+            'breed' => $request->breed,
+            'sp_1' => $request->f1,
+            'sp_2' => $request->f2,
+            'hp' => $request->hp,
+            'attack' => $request->attack,
+            'status' => $request->status == 'on' ? 1 : 0,
+            'hybrid' => $request->hybrid,
+            'cost' => $request->dna,
+            'cost_type' => $request->cost_type,
+            'stars' => $this->findStars($request),
+            'max' => $request->max,
+            'total' => $request->total,
+            'card' => $request->card,
+        ]);
+
+        return redirect('/list?type=' . strtolower($request->type));
+    }
+
+    public function filter($filter, $option)
+    {
+        $data = Creature::where($filter, $option)->orderByRaw('ferocity asc')->get();
+        if ($filter == 'class') {
+            $option = substr($option, 0, -1);
+        }
+        return view('dino.filter', ['name' => $option, 'data' => $data]);
+    }
+
+    private function findStars($c)
+    {
+        if ($c->breed == 'General') {
+            switch ($c->rank) {
+                case 'Common':
+                    return 1;
+                    break;
+                case 'Rare':
+                    return 2;
+                    break;
+                case 'Super Rare':
+                    return 3;
+                    break;
+                case 'Legendary':
+                    return 4;
+                    break;
+                case 'Limited Edition':
+                    return 5;
+                    break;
+                default:
+                    return 6;
+                    break;
+            }
+        }
     }
 }

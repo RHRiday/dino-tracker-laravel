@@ -17,12 +17,11 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/create', function(){
-    return view('create');
-});
-Route::post('/create', 'DinoController@create');
+Route::get('/create', 'DinoController@create');
+Route::post('/create', 'DinoController@store');
+Route::get('/show/{key}', 'DinoController@show');
+Route::get('/edit/{creature}', 'DinoController@edit');
+Route::post('/edit/{creature}', 'DinoController@update');
 
-Route::get('/land', 'DinoController@show');
-Route::get('/class/{class}', 'DinoController@showClass');
-Route::get('/rank/{rank}', 'DinoController@showRank');
-Route::get('/breed/{breed}', 'DinoController@showBreed');
+Route::get('/list', 'DinoController@index');
+Route::get('/{filter}/{option}', 'DinoController@filter');
