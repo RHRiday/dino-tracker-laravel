@@ -34,7 +34,7 @@ class DinoController extends Controller
                     $item->ferocity
                 ];
             });
-        return view('dino.index', ['lands' => $data]);
+        return view('dino.index', ['data' => $data]);
     }
 
     public function show($key)
@@ -71,8 +71,14 @@ class DinoController extends Controller
             'status' => $request->status == 'on' ? 1 : 0,
             'hybrid' => $request->hybrid,
             'cost' => $request->dna,
-            'stars' => $this->findStars($request),
-            'card' => $request->card,
+            'cost_type' => $request->cost_type,
+            'stars' => $request->stars,
+            'max' => $request->max,
+            'card' => explode('/revision', $request->card)[0] ?? null,
+            'sdna' => $request->sdna,
+            'shop' => $request->shop,
+            's2' => $request->s2,
+            's3' => $request->s3,
         ]);
 
         return redirect('/list?type=' . strtolower($request->type));
@@ -106,13 +112,16 @@ class DinoController extends Controller
             'hybrid' => $request->hybrid,
             'cost' => $request->dna,
             'cost_type' => $request->cost_type,
-            'stars' => $this->findStars($request),
+            'stars' => $request->stars,
             'max' => $request->max,
-            'total' => $request->total,
-            'card' => $request->card,
+            'card' => explode('/revision', $request->card)[0] ?? $creature->card,
+            'sdna' => $request->sdna,
+            'shop' => $request->shop,
+            's2' => $request->s2,
+            's3' => $request->s3,
         ]);
 
-        return redirect('/list?type=' . strtolower($request->type));
+        return redirect('/show/' . $request->name);
     }
 
     public function filter($filter, $option)

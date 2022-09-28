@@ -27,7 +27,7 @@
                     <h5 class="card-header mb-2 text-center">What do you want to view?</h5>
                     <div class="d-flex justify-content-around">
                         <a href="/list?type=land" class="btn btn-primary">Land</a>
-                        <a href="/list>type=aquatic" class="btn btn-primary">Aquatic</a>
+                        <a href="/list?type=aquatic" class="btn btn-primary">Aquatic</a>
                         <a href="/list?type=cenozoic" class="btn btn-primary">Cenozoic</a>
                     </div>
                 </div>

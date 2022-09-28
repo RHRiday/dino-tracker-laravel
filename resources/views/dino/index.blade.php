@@ -18,28 +18,39 @@
                         <th scope="col">Hybrid</th>
                     </tr>
                 </thead>
-                @foreach ($lands as $land)
+                @foreach ($data as $dino)
                     <tr>
                         <td>
-                            <a href="/show/{{ $land->name }}">{{ $land->name }}</a>
-                            <a class="btn btn-sm btn-outline-secondary" href="/edit/{{ $land->id }}">
-                                <i class="far fa-edit"></i>    
+                            <a href="/show/{{ $dino->name }}">{{ $dino->name }}</a>
+                            @if ($dino->status)
+                                <i class="fas fa-check-circle text-success" title="Unlocked"></i>
+                            @else
+                                <i class="fas fa-times-circle text-danger" title="Locked"></i>
+                            @endif
+                            <a class="btn btn-sm btn-outline-secondary float-end" href="/edit/{{ $dino->id }}">
+                                <i class="far fa-edit"></i>
                             </a>
                         </td>
                         <td>
-                            <a class="btn btn-sm btn-outline-dark" href="/class/{{ $land->class }}">{{ $land->class }}</a>
+                            <a class="btn btn-sm btn-outline-dark" href="/class/{{ $dino->class }}">{{ $dino->class }}</a>
                         </td>
                         <td>
-                            <a class="btn btn-sm btn-outline-dark" href="/rank/{{ $land->rank }}">{{ $land->rank }}</a>
+                            <a class="btn btn-sm btn-outline-dark" href="/rank/{{ $dino->rank }}">{{ $dino->rank }}</a>
                         </td>
                         <td>
-                            <a class="btn btn-sm btn-outline-dark" href="/breed/{{ $land->breed }}">{{ $land->breed }}</a>
+                            <a class="btn btn-sm btn-outline-dark" href="/breed/{{ $dino->breed }}">{{ $dino->breed }}</a>
                         </td>
-                        <td>{{ $land->hp }}</td>
-                        <td>{{ $land->attack }}</td>
-                        <td>{{ $land->cost ?? 'N\A' }}</td>
-                        <td>{{ $land->ferocity }}</td>
-                        <td>{{ $land->hybrid ?? 'N\A' }}</td>
+                        <td>{{ $dino->hp }}</td>
+                        <td>{{ $dino->attack }}</td>
+                        <td>{{ $dino->cost ?? 'N\A' }}</td>
+                        <td>{{ $dino->ferocity }}</td>
+                        <td>
+                            @if ($dino->hybrid != null)
+                                <a href="/show/{{ $dino->hybrid }}">{{ $dino->hybrid }}</a>
+                            @else
+                                N\A
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </table>

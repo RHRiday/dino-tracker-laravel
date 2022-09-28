@@ -26,7 +26,7 @@ class CreateCreaturesTable extends Migration
             $table->integer('attack');
             $table->unsignedDecimal('ferocity')->virtualAs('hp+3.2*attack');
             $table->integer('cost')->nullable();
-            $table->string('cost_type')->default('N\A')->comment('In case of S-DNA, the Species');
+            $table->string('cost_type')->default('N\\A')->comment('In case of S-DNA, the Species');
             $table->unsignedDecimal('stars')->nullable()->comment('In case of hybrid, x+y*2/1.5');
             $table->boolean('status')->default('0');
             $table->text('get')->nullable();

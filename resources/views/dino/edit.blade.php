@@ -125,15 +125,35 @@
                             <input type="number" name="max" class="form-control" id="max"
                                 value="{{ $dino->max ?? old('max') }}">
                         </div>
-                        <div class="col-3">
-                            <label for="total" class="form-label">Total Collected</label>
-                            <input type="number" name="total" class="form-control" id="total"
-                                value="{{ $dino->total ?? old('total') }}">
+                        <div class="col-2">
+                            <label for="stars" class="form-label">Stars</label>
+                            <input type="number" step="any" name="stars" class="form-control" id="stars"
+                                value="{{ $dino->stars ?? old('stars') }}">
                         </div>
-                        <div class="col-5">
+                        <div class="col-6">
                             <label for="card" class="form-label">Card URL</label>
                             <input type="text" name="card" class="form-control" id="card"
                                 value="{{ $dino->card ?? old('card') }}">
+                        </div>
+                        <div class="col-3">
+                            <label for="sdna" class="form-label">Available S-DNA</label>
+                            <input type="number" step="1" name="sdna" class="form-control" id="sdna"
+                                value="{{ $dino->sdna ?? old('sdna') }}">
+                        </div>
+                        <div class="col-3">
+                            <label for="shop" class="form-label">In Shop/Stage 1</label>
+                            <input type="number" step="1" name="shop" class="form-control" id="shop"
+                                value="{{ $dino->shop ?? old('shop') }}">
+                        </div>
+                        <div class="col-3">
+                            <label for="s2" class="form-label">Stage 2</label>
+                            <input type="number" step="1" name="s2" class="form-control" id="s2"
+                                value="{{ $dino->s2 ?? old('s2') }}">
+                        </div>
+                        <div class="col-3">
+                            <label for="s3" class="form-label">Stage 3</label>
+                            <input type="number" step="1" name="s3" class="form-control" id="s3"
+                                value="{{ $dino->s3 ?? old('s3') }}">
                         </div>
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary">Update</button>

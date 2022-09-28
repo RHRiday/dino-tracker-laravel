@@ -56,17 +56,21 @@
                                 <option value="Super Hybrid">Super Hybrid</option>
                             </select>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <label for="hp" class="form-label">HP</label>
                             <input type="number" name="hp" class="form-control" id="hp" required>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <label for="attack" class="form-label">Attack</label>
                             <input type="number" name="attack" class="form-control" id="attack" required>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <label for="dna" class="form-label">DNA cost</label>
                             <input type="number" name="dna" class="form-control" id="dna">
+                        </div>
+                        <div class="col-3">
+                            <label for="cost_type" class="form-label">Cost Type</label>
+                            <input type="text" name="cost_type" class="form-control" id="cost_type">
                         </div>
                         <div class="col-4">
                             <label for="" class="col-auto col-form-label">Hybrid Species 01</label>
@@ -112,13 +116,29 @@
                             <label for="max" class="form-label">Max Level</label>
                             <input type="number" name="max" class="form-control" id="max">
                         </div>
-                        <div class="col-3">
-                            <label for="total" class="form-label">Total Collected</label>
-                            <input type="number" name="total" class="form-control" id="total">
+                        <div class="col-2">
+                            <label for="stars" class="form-label">Stars</label>
+                            <input type="number" step="any" name="stars" class="form-control" id="stars">
                         </div>
-                        <div class="col-5">
+                        <div class="col-6">
                             <label for="card" class="form-label">Card URL</label>
                             <input type="text" name="card" class="form-control" id="card">
+                        </div>
+                        <div class="col-3">
+                            <label for="sdna" class="form-label">Available S-DNA</label>
+                            <input type="number" step="1" name="sdna" class="form-control" id="sdna">
+                        </div>
+                        <div class="col-3">
+                            <label for="shop" class="form-label">In Shop/Stage 1</label>
+                            <input type="number" step="1" name="shop" class="form-control" id="shop">
+                        </div>
+                        <div class="col-3">
+                            <label for="s2" class="form-label">Stage 2</label>
+                            <input type="number" step="1" name="s2" class="form-control" id="s2">
+                        </div>
+                        <div class="col-3">
+                            <label for="s3" class="form-label">Stage 3</label>
+                            <input type="number" step="1" name="s3" class="form-control" id="s3">
                         </div>
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary">Add</button>
