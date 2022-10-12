@@ -433,7 +433,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="creaturesDrop">
                                 <li><a class="dropdown-item" href="/list?type=land">Land</a></li>
-                                <li><a class="dropdown-item" href="/list?type=Aquatic">Aquatic</a></li>
+                                <li><a class="dropdown-item" href="/list?type=aquatic">Aquatic</a></li>
                                 <li><a class="dropdown-item" href="/list?type=cenozoic">Cenozoic</a></li>
                             </ul>
                         </li>

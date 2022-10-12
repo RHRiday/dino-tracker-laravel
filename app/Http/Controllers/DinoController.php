@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Creature;
-use App\Models\Land;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class DinoController extends Controller
 {
@@ -34,7 +32,32 @@ class DinoController extends Controller
                     $item->ferocity
                 ];
             });
-        return view('dino.index', ['data' => $data]);
+
+        if($request->class != null) {
+            $data = $data->where('class', $request->class);
+        }
+        if($request->rank != null) {
+            $data = $data->where('rank', $request->rank);
+        }
+        if($request->breed != null) {
+            $data = $data->where('breed', $request->breed);
+        }
+        if($request->status != null) {
+            $data = $data->where('status', $request->status);
+        }
+        if($request->hybrid != null) {
+            if($request->hybrid == 0){
+                $data = $data->whereNull('hybrid');
+            } else {
+                $data = $data->whereNotNull('hybrid');
+            }
+        }
+        return view('dino.index', [
+            'data' => $data,
+            'classes' => $class,
+            'ranks' => $rank,
+            'breeds' => $breed,
+        ]);
     }
 
     public function show($key)

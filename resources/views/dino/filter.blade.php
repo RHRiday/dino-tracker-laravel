@@ -14,7 +14,7 @@
                         <div class="card-body">
                             <div class="card-header">
                                 <img src="{{ $item->card }}" alt="" class="w-100">
-                                <h5 class="card-title text-center mb-0">
+                                <h5 class="card-title text-center mb-0 mt-1">
                                     <a href="/show/{{ $item->name }}">{{ $item->name }}</a>
                                     <a class="btn btn-sm btn-outline-secondary" href="/edit/{{ $item->id }}">
                                         <i class="far fa-edit"></i>

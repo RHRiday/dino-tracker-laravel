@@ -31,7 +31,7 @@ class CreateCreaturesTable extends Migration
             $table->boolean('status')->default('0');
             $table->text('get')->nullable();
             $table->integer('max')->default('0')->nullable()->comment('Max level acquired');
-            $table->integer('total')->default('0')->comment('Total collected');
+            $table->integer('total')->default('0')->comment('Total collected'); //dropped collumn
             $table->string('hybrid')->nullable();
             $table->string('card')->nullable();
             $table->timestamps();
